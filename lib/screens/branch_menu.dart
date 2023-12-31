@@ -8,64 +8,165 @@ class BranchMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Image.asset('images/macam_pempek.jpg'),
-          Expanded(
-            flex: 1,
-            child: Text(
-              cabang.name,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30.0,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            leading: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            expandedHeight: 300,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                child: Image.asset(
+                  'images/macam_pempek.jpg',
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: ListView.builder(
-              itemCount: cabang.menuList.length,
-              itemBuilder: (context, index) {
-                final Menu menu = cabang.menuList[index];
-                return Card(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Image.asset('images/macam_pempek.jpg'),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                menu.name,
-                                style: const TextStyle(
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Text(menu.price.toString()),
-                            ],
+          //
+          //
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          cabang.name,
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                );
-              },
+                        SizedBox(height: 16.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Icon(Icons.location_city),
+                            ),
+                            Expanded(
+                              flex: 10,
+                              child: Text(cabang.location),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Icon(Icons.lock_clock_rounded),
+                            ),
+                            Expanded(
+                              flex: 10,
+                              child: Text(cabang.openingHours),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text('M E N U'),
+                  ],
+                ),
+              ),
             ),
-          )
+          ),
+          //
+          //
+          SliverList.builder(
+            itemCount: cabang.menuList.length,
+            itemBuilder: (context, index) {
+              final Menu menu = cabang.menuList[index];
+              return Container(
+                margin: EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(bottom: 8.0),
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.grey))),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Image.asset('images/macam_pempek.jpg'),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              menu.name,
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Text(menu.price.toString()),
+                            FavoriteButton(),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
         ],
       ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        isFavorite ? Icons.favorite : Icons.favorite_border,
+        color: Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
     );
   }
 }
