@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pempek_candy/models/branch.dart';
+import 'package:pempek_candy/provider/favorite_provider.dart';
+import 'package:provider/provider.dart';
 
 class BranchMenu extends StatelessWidget {
   const BranchMenu({super.key, required this.cabang});
@@ -7,6 +9,8 @@ class BranchMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<FavoriteProvider>(context);
+    //
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -130,7 +134,17 @@ class BranchMenu extends StatelessWidget {
                             ),
                             const SizedBox(height: 10.0),
                             Text(menu.price.toString()),
-                            FavoriteButton(),
+                            IconButton(
+                              onPressed: () {
+                                provider.toggleFavorite(menu);
+                              },
+                              icon: provider.isExist(menu)
+                                  ? const Icon(
+                                      Icons.favorite,
+                                      color: Colors.red,
+                                    )
+                                  : const Icon(Icons.favorite_border),
+                            ),
                           ],
                         ),
                       ),
@@ -142,31 +156,6 @@ class BranchMenu extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({super.key});
-
-  @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: Colors.red,
-      ),
-      onPressed: () {
-        setState(() {
-          isFavorite = !isFavorite;
-        });
-      },
     );
   }
 }
