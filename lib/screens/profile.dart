@@ -2,14 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:pempek_candy/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
-  final String user = 'Reven Rudy Ishak';
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  String username = 'Reven Rudy Ishak';
+  String bio = 'emptybio';
+  Future<void> editField(String field, Function(String) update) async {
+    String newValue = '';
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.grey.shade900,
+        title: Text(
+          'Edit $field',
+          style: const TextStyle(color: Colors.white),
+        ),
+        content: TextField(
+          autofocus: true,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            hintText: 'Enter new $field',
+            hintStyle: const TextStyle(color: Colors.grey),
+          ),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          TextButton(
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: const Text(
+              'Save',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              update(newValue);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<FavoriteProvider>(context);
     final menus = provider.menu;
+
     return Column(
       children: [
         const SizedBox(height: 50.0),
@@ -21,7 +72,7 @@ class Profile extends StatelessWidget {
         const SizedBox(height: 10.0),
         //
         Text(
-          user,
+          username,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.grey.shade700),
         ),
@@ -36,14 +87,24 @@ class Profile extends StatelessWidget {
           ),
         ),
         //
-        const TextBox(
-          text: 'Reven Rudy Ishak',
-          sectionName: 'Username',
+        TextBox(
+          text: username,
+          sectionName: 'username',
+          onPressed: () => editField('username', (newValue) {
+            setState(() {
+              username = newValue;
+            });
+          }),
         ),
         //
-        const TextBox(
-          text: 'empty bio',
-          sectionName: 'Bio',
+        TextBox(
+          text: bio,
+          sectionName: 'bio',
+          onPressed: () => editField('bio', (newValue) {
+            setState(() {
+              bio = newValue;
+            });
+          }),
         ),
         //
         const SizedBox(height: 50.0),
@@ -64,10 +125,11 @@ class Profile extends StatelessWidget {
             itemBuilder: (context, index) {
               final menu = menus[index];
               return Container(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 8.0),
                 decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    border: Border(bottom: BorderSide(color: Colors.grey))),
+                    border:
+                        const Border(bottom: BorderSide(color: Colors.grey))),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,16 +185,20 @@ class Profile extends StatelessWidget {
 class TextBox extends StatelessWidget {
   final String sectionName;
   final String text;
+  final void Function()? onPressed;
 
   const TextBox({
     super.key,
     required this.text,
     required this.sectionName,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(left: 15, bottom: 15),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
       ),
@@ -150,7 +216,7 @@ class TextBox extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.settings),
-                onPressed: () {},
+                onPressed: onPressed,
               ),
             ],
           ),

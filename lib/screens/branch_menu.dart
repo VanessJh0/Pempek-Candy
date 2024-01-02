@@ -22,7 +22,7 @@ class BranchMenu extends StatelessWidget {
                 child: CircleAvatar(
                   backgroundColor: Colors.grey,
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
@@ -47,10 +47,10 @@ class BranchMenu extends StatelessWidget {
           //
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               child: Container(
                 height: 200,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.black))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +60,7 @@ class BranchMenu extends StatelessWidget {
                       children: [
                         Text(
                           cabang.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 32.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -68,7 +68,7 @@ class BranchMenu extends StatelessWidget {
                         SizedBox(height: 16.0),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 1,
                               child: Icon(Icons.location_city),
                             ),
@@ -78,10 +78,10 @@ class BranchMenu extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               flex: 1,
                               child: Icon(Icons.lock_clock_rounded),
                             ),
@@ -106,9 +106,9 @@ class BranchMenu extends StatelessWidget {
             itemBuilder: (context, index) {
               final Menu menu = cabang.menuList[index];
               return Container(
-                margin: EdgeInsets.all(8.0),
-                padding: EdgeInsets.only(bottom: 8.0),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 8.0),
+                decoration: const BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.grey))),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pempek_candy/screens/branch_screen.dart';
 import 'package:pempek_candy/screens/home_screen.dart';
 import 'package:pempek_candy/screens/profile.dart';
-import 'package:pempek_candy/screens/profile_screen.dart';
 
 class TabBarHome extends StatelessWidget {
   const TabBarHome({super.key});
@@ -12,13 +11,14 @@ class TabBarHome extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
           title: const Text(
             'PEMPEK CANDY',
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             HomeScreen(),
             BranchScreen(),
@@ -26,7 +26,7 @@ class TabBarHome extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Container(
-          child: TabBar(tabs: [
+          child: const TabBar(tabs: [
             Tab(
               icon: Icon(
                 Icons.home,
