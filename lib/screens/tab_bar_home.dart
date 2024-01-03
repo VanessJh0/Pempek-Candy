@@ -12,7 +12,7 @@ class TabBarHome extends StatelessWidget {
       length: 3,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Color.fromARGB(255, 255, 247, 227),
         appBar: AppBar(
           title: const Text(
             'PEMPEK CANDY',
@@ -26,23 +26,24 @@ class TabBarHome extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Container(
+          color: Color.fromARGB(255, 255, 255, 255),
           child: const TabBar(tabs: [
             Tab(
               icon: Icon(
                 Icons.home,
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 238, 175, 48),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.bakery_dining_sharp,
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 238, 175, 48),
               ),
             ),
             Tab(
               icon: Icon(
                 Icons.person,
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 238, 175, 48),
               ),
             ),
           ]),

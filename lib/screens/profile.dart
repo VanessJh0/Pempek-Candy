@@ -66,7 +66,7 @@ class _ProfileState extends State<Profile> {
         const SizedBox(height: 50.0),
         const Icon(
           Icons.person,
-          size: 72,
+          size: 90,
         ),
         //
         const SizedBox(height: 10.0),
@@ -89,8 +89,8 @@ class _ProfileState extends State<Profile> {
         //
         TextBox(
           text: username,
-          sectionName: 'username',
-          onPressed: () => editField('username', (newValue) {
+          sectionName: 'Username',
+          onPressed: () => editField('Username', (newValue) {
             setState(() {
               username = newValue;
             });
